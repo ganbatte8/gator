@@ -96,12 +96,12 @@ goose postgres postgres://postgres:postgres@localhost:5432/gator up
 ```
 Port `5432` is PostgreSQL's default port.
 
-If you want to use approach 2): it is possible to give a file of sql commands to process by PostgreSQL with a command like this:
+If you want to use approach 2): it is possible to give a file of sql code for PostgreSQL to process with a command like this:
 ```bash
 sudo -u postgres psql -d gator -f test.sql
 ```
 For your convenience I have concatenated the SQL pieces of code that do all the up migrations into one file `make_tables.sql` at the root of the project so you don't have to grab the code from several different files yourself.
-This makes future maintenance harder but I'm not expecting to touch this project in the future.
+This makes code integrity harder to maintain but I'm not expecting to touch this project in the future.
 
 ## Setting up the config file
 Create a json file `.gatorconfig.json` in your home directory. Put this JSON content inside:
