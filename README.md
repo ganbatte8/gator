@@ -83,7 +83,7 @@ It appears there is a bit of an oversight in the project's design:
 if you installed the project with `go install`, you may not have the source files easily available, which makes running the migrations harder.
 There are essentially two approaches for this: 1) access the source code, install goose and run the goose migrations with it. This is the way up and down migrations were run during development. 2) Simply extract and copy the SQL commands and run them yourself without Goose.
 
-In the case of approach 1), if you used `go install`, the source code may be stored somewhere on your filesystem.
+In the case of approach 1), if you installed gator with `go install`, its source code may be stored somewhere on your filesystem.
 On my system it would be in `~/go/pkg/mod/github.com`. In the general case it can help to run `whereis gator` which will locate the compiled program (at least on Linux), which likely has a path similar to the source code. An alternative way to get the source code is to simply copy or clone this repo.
 Once you have it, you can install `goose`:
 ``` bash
