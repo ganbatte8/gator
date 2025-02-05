@@ -103,7 +103,7 @@ sudo -u postgres psql -d gator -f test.sql
 For your convenience I have concatenated the SQL pieces of code that do all the up migrations into one file `make_tables.sql` at the root of the project so you don't have to grab the code from several different files yourself.
 This makes future maintenance harder but I'm not expecting to touch this project in the future.
 
-## Set up the config file
+## Setting up the config file
 Create a json file `.gatorconfig.json` in your home directory. Put this JSON content inside:
 ```json
 {"db_url":"postgres://postgres:postgres@localhost:5432/gator?sslmode=disable",
@@ -157,7 +157,8 @@ This sends HTTP GET requests to the feeds followed by the current user, periodic
 This prints some information (notably title and description) of the posts stored in the database (previously fetched with `gator agg`), for the feeds followed by the current user. The posts are sorted by publication date, most recent first. The command prints up to `lim` (an integer) number of posts. `lim` is an optional argument with default value `2`.
 
 
-To summarize the usage of this program: first you register a user if you don't have any,
+## Program usage in a nutshell
+First you register a user if you don't have any,
 make sure you're logged in as the user you want to be,
 add a feed with `gator addfeed feedname url`,
 then follow it with `gator follow url` (you must add the feed before following it),
