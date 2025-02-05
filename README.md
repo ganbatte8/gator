@@ -133,6 +133,7 @@ Add an RSS feed in the database. `feedname` can be any name you choose. `url` sh
 - TechCrunch: `https://techcrunch.com/feed/`
 - Hacker News: `https://news.ycombinator.com/rss`
 - Boot.dev Blog: `https://blog.boot.dev/index.xml`
+
 Note that the database associates a unique `user_id` to each feed record.
 This is kind of weird, especially considering that we also have a many-to-many relationship between feeds and users implemented by the `feed_follows` table.
 If I remade this I think I would keep the join table and remove the `user_id` foreign key in the feeds table. It is also possible I didn't follow the course instructions properly or misinterpreted some step or something.
