@@ -21,20 +21,19 @@ My Go version was `1.23.4`. You can check yours with `go version`.
 Once Go is installed, you can install this implementation of gator with
 `go install github.com/ganbatte8/gator`.
 
-`gator` should then be available as a command from anywhere on your command line if your PATH contains `$GOPATH/bin` (or `$GOBIN`). Windows-based environments should be different but similar (ha).
+`gator` should then be available as a command from anywhere on your command line if your PATH contains `$GOPATH/bin` (or `$GOBIN`). This installation process kind of assumes a Unix-based OS but it should be possible to set it up on Windows too, it should be different but similar, haha.
 
 
 ## Setting up the PostgreSQL database
 
-
-PostgreSQL installation can be a little different (but similar) on different systems.
-I was on Manjaro (don't recommend) when I wrote this program, which is an Arch Linux based distribution,
-so the commands indeed ended up being different than indicated in the course.
-My main reference was this arch wiki page: https://wiki.archlinux.org/title/PostgreSQL.
+PostgreSQL installation on different systems is similar but different.
+I was on Manjaro (not recommended) when I wrote this program, which is an Arch Linux based distribution,
+so the commands ended up being a little different than indicated in the course indeed.
+My main reference for the installation and setup was this arch wiki page: https://wiki.archlinux.org/title/PostgreSQL.
 
 PostgreSQL needs to be v15 or later. My version was `16.3`.
 
-Once PostgreSQL is installed (usually via a package manager),
+Once PostgreSQL is installed (supposedly via your distribution's package manager),
 first you can check your installed version with `psql --version`.
 Then you have to start the postgresql service (normally just once)
 by running a command that presumably looks like this on Ubuntu:
@@ -61,8 +60,8 @@ The last command said that I can start the database server with this command (bu
 ```bash
 pg_ctl -D /var/lib/postgres/data -l logfile start
 ```
-It appears the `pg_ctl` command above was not necessary for me,
-I did not research why or what it does exactly.
+It appears that `pg_ctl` command was not necessary for me.
+I did not research why, or what it does exactly.
 But for the record, if you do try to run this command and it gives a file permission error,
 it may be because the service wasn't started properly.
 
@@ -73,18 +72,18 @@ CREATE DATABASE gator;
 ALTER USER postgres PASSWORD 'postgres'; -- Linux only: change the database password
 ```
 
-You can exit the `psql` cli with `exit`.
+You can exit the `psql` CLI with `exit`.
 
 ## Creating the tables
 Then you need to run the SQL "up migrations" that create the database tables.
 The SQL code that creates these tables is contained in the sql files in `sql/schema`
-in this project's repository, specifically the sections immediately preceded by `-- +goose Up` comments, avoiding the sections preceded by `-- +goose Down` comments.
+in this project's repository, specifically the sections immediately preceded by `-- +goose Up` comments, ignoring the sections preceded by `-- +goose Down` comments.
 
 It appears there is a bit of an oversight in the project's design:
 if you installed the project with `go install`, you may not have the source files easily available, which makes running the migrations harder.
 There are essentially two approaches for this: 1) access the source code, install goose and run the goose migrations with it. This is the way up and down migrations were run during development. 2) Simply extract and copy the SQL commands and run them yourself without Goose.
 
-In the case of approach 1) f you used `go install`, the source code may be stored somewhere on your filesystem.
+In the case of approach 1), if you used `go install`, the source code may be stored somewhere on your filesystem.
 On my system it would be in `~/go/pkg/mod/github.com`. In the general case it can help to run `whereis gator` which will locate the compiled program (at least on Linux), which likely has a path similar to the source code. An alternative way to get the source code is to simply copy or clone this repo.
 Once you have it, you can install `goose`:
 ``` bash
@@ -101,12 +100,11 @@ If you want to use approach 2): it is possible to give a file of sql commands to
 ```bash
 sudo -u postgres psql -d gator -f test.sql
 ```
-For your convenience I have concatenated the up-migration SQL pieces of code into one file `make_tables.sql` at the root of the project so you don't have to grab the code from several  different files yourself.
+For your convenience I have concatenated the SQL pieces of code that do all the up migrations into one file `make_tables.sql` at the root of the project so you don't have to grab the code from several different files yourself.
 This makes future maintenance harder but I'm not expecting to touch this project in the future.
 
 ## Set up the config file
-Create a json file `.gatorconfig.json` in your home directory.
-In it, put this json content:
+Create a json file `.gatorconfig.json` in your home directory. Put this JSON content inside:
 ```json
 {"db_url":"postgres://postgres:postgres@localhost:5432/gator?sslmode=disable",
 "current_user_name":"kahya"}
@@ -134,7 +132,7 @@ This lists all user names in the database. It also indicates which one is the cu
 Add an RSS feed in the database. `feedname` can be any name you choose. `url` should match a real RSS link, some examples being
 - TechCrunch: `https://techcrunch.com/feed/`
 - Hacker News: `https://news.ycombinator.com/rss`
-- Boot.dev Blog: `https://blog.boot.dev/index.xml
+- Boot.dev Blog: `https://blog.boot.dev/index.xml`
 Note that the database associates a unique `user_id` to each feed record.
 This is kind of weird, especially considering that we also have a many-to-many relationship between feeds and users implemented by the `feed_follows` table.
 If I remade this I think I would keep the join table and remove the `user_id` foreign key in the feeds table. It is also possible I didn't follow the course instructions properly or misinterpreted some step or something.
