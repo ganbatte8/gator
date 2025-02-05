@@ -94,7 +94,8 @@ Then `cd sql/schema` and run each up migration, by running this command five tim
 ```bash
 goose postgres postgres://postgres:postgres@localhost:5432/gator up
 ```
-Port `5432` is PostgreSQL's default port.
+This third string here is the connection string to the database, it might be different if you configured PostgreSQL differently.
+The general format of the connection string is `protocol://username:password@host:port/database`. Port `5432` is PostgreSQL's default port.
 
 If you want to use approach 2): it is possible to give a file of sql code for PostgreSQL to process with a command like this:
 ```bash
