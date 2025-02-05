@@ -101,7 +101,7 @@ If you want to use approach 2): it is possible to give a file of sql code for Po
 ```bash
 sudo -u postgres psql -d gator -f test.sql
 ```
-For your convenience I have concatenated the SQL pieces of code that do all the up migrations into one file `make_tables.sql` at the root of the project so you don't have to grab the code from several different files yourself.
+For your convenience I have concatenated the pieces of SQL code that do all the up migrations into one file `make_tables.sql` at the root of the project so you don't have to grab the code from several different files yourself.
 This makes code integrity harder to maintain but I'm not expecting to touch this project in the future.
 
 ## Setting up the config file
